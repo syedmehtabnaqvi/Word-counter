@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Word Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    p {
+      text-align: center;
+      color: #666;
+      font-size: 20px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 90%;
+      height: 200px;
+      padding: 10px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+      font-size: 16px;
+      display: block;
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4285f4;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #357ae8;
+    }
+
+    span {
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+  <script>
+    function countWords() {
+      var text = document.getElementById('textInput').value;
+
+      // Word count
+      var words = text.trim().split(/\s+/).filter(function(word) {
+        return word.length > 0;
+      });
+      document.getElementById('wordCount').innerText = words.length;
+
+      // Character count
+      var characters = text.replace(/\s/g, ''); // Remove spaces
+      document.getElementById('charCount').innerText = characters.length;
+
+      // Most common word
+      var wordMap = new Map();
+      words.forEach(function(word) {
+        var count = wordMap.get(word) || 0;
+        wordMap.set(word, count + 1);
+      });
+      
+      var maxCount = 0;
+      var mostCommonWord = '-';
+      for (var [word, count] of wordMap.entries()) {
+        if (count > maxCount) {
+          mostCommonWord = word;
+          maxCount = count;
+        }
+      }
+      document.getElementById('mostCommonWord').innerText = mostCommonWord;
+    }
+  </script>
+</head>
+<body>
+  <h1>Word Counter</h1>
+  <p>Created by: <span style="text-decoration: underline;"><i>Syed Mehtab Naqvi</i></span></p>
+  <textarea id="textInput" placeholder="Enter text"></textarea>
+  <button onclick="countWords()">Count</button>
+  <p>Word count: <span id="wordCount">0</span></p>
+  <p>Character count (excluding spaces): <span id="charCount">0</span></p>
+  <p>Most common word: <span id="mostCommonWord">-</span></p>
+</body>
+</html>
